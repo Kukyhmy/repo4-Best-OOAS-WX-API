@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuky.ooas.wx.db.dao.TbDeptDao">
+  <select id="searchDeptMembers" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT
+    d.id,
+    d.dept_name AS deptName,
+    COUNT(u.id) AS count
+    FROM tb_dept d LEFT JOIN tb_user u ON u.dept_id=d.id AND u.status=1
+    <if test="keyword!=null">
+      WHERE u.name LIKE '%${keyword}%'
+    </if>
+    GROUP BY d.id
+  </select>
+
+  <select id="searchAllDept" resultType="com.kuky.ooas.wx.db.pojo.TbDept">
+    SELECT
+      id,
+      dept_name
+    FROM tb_dept
+    ORDER BY id
+  </select>
+  <insert id="insertDept" parameterType="String">
+    INSERT INTO tb_dept
+    SET dept_name=#{deptName}
+  </insert>
+  <delete id="deleteDeptById" parameterType="int">
+    DELETE FROM tb_dept
+    WHERE id = #{id}
+  </delete>
+  <update id="updateDeptById" parameterType="com.kuky.ooas.wx.db.pojo.TbDept">
+    UPDATE tb_dept
+    SET dept_name=#{deptName}
+    WHERE id = #{id}
+  </update>
+
+
+</mapper>

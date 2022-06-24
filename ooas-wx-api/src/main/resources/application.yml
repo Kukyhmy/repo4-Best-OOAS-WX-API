@@ -1,0 +1,102 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000ms
+  port: 8080
+  servlet:
+    context-path: /ooas-wx-api
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/emos1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: abc123456
+      initial-size: 8
+      max-active: 16
+      min-idle: 8
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: abc123456
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: emos
+      authentication-database: admin
+      username: admin
+      password: abc123456
+  mail:
+        default-encoding: UTF-8
+        host: smtp.aliyun.com
+        username: hmykuky2@aliyun.com
+        password: 18607577078xx520
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.kuky.ooas.wx.db.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    com.kuky.emos.wx.db.dao : warn
+  pattern:
+    console: "%d{HH:mm:ss}  %-5level  %msg%n"
+
+emos:
+  jwt:
+    #密钥
+    secret: abc123456
+    #令牌过期时间（天）
+    expire:  5
+    #令牌缓存时间（天数）
+    cache-expire: 10
+  face:
+    createFaceModelUrl: http://localhost:3000/create_face_model
+    checkinUrl: http://localhost:3000/checkin
+  email:
+    system: hmykuky2@aliyun.com
+    hr: 739663514@qq.com
+  image-folder: /root/emos/image
+#  image-folder: D:/Project/EMOS1/image
+  code: 9C21DE1E3CB138EC
+    # 万年历接口参数
+  calendar:
+    url: https://www.mxnzp.com/api/holiday/list/year/
+    app_id: btilauk2qinxwkv1
+    app_secret: L3JRc3ZyTmhDc21XTlVYRnVDeUF1dz09
+  recieveNotify: http://localhost:8080/ooas-wx-api/meeting/recieveNotify
+
+workflow:
+  url: http://localhost:9090/emos-workflow
+
+wx:
+  app-id: wxee20c87729306953
+  app-secret: 4ffe9cede6f1cf4c0d0d2c0fd93767c1
+#wx:
+#  app-id: wx4cb8e9621950da45
+#  app-secret: 9d80f4125c50e1cf8bc6031c9319b2df
+trtc:
+  appid: 1400688477
+  key: eca69897427316fcff314a6b1b0e1f71abf34c306dcf35c36d1f5b064296d5fc
+  expire: 86400
